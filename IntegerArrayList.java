@@ -25,6 +25,10 @@ public class IntegerArrayList implements IntegerList
 
     public void add(int index, Integer val)
     {
+        if (index <0 || index > size)
+        {
+            throw new IndexOutOfBoundsException("index: "+ index);
+        }
         if (size>=data.length)
         {
             Integer[] biggerArray =  new Integer[data.length*2];
@@ -41,8 +45,12 @@ public class IntegerArrayList implements IntegerList
         data[index]=val;
         size++;
     }
-    public void set(int index, Integer val);
+    public void set(int index, Integer val)
     {
+        if (index<0 || index >= size)
+        {
+            throw new IndexOutOfBoundsException("index: "+ index);
+        }
         data[index] = val;
     }
 
@@ -50,17 +58,23 @@ public class IntegerArrayList implements IntegerList
     {
         size = 0;
     }
-    public void remove(int index)
-    {
-        for (int i = index; i<size-1; i--)
+    public Integer remove(int index)
+    { 
+        if (index <0 || index >= size)
+        {
+            throw new IndexOutOfBoundsException("index: "+ index);
+        }
+
+        for (int i = index; i<size-1; i++)
         {
             data[i] = data[i+1];
         }
         size--;
+        return size;
     }
     public Integer get(int index)
     {
-        if (index<0 || index>= size)
+        if (index<0 || index >= size)
         {
             throw new IndexOutOfBoundsException("index: "+ index);
         }
@@ -92,7 +106,7 @@ public class IntegerArrayList implements IntegerList
     {
         for(int i=0; i<size; i++)
         {
-            if (data[i]== val)
+            if (data[i].equals(val))
                 return i;
         }
         return -1;
@@ -118,7 +132,11 @@ public class IntegerArrayList implements IntegerList
         {
             result += data[i] + ",";
         }
-        result += data[size-1] + "]";
+        if (size>0)
+        {
+            result += data[size-1];
+        }
+        result+= "]";
         return result;
     }
 
